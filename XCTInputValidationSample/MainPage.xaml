@@ -1,24 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="XCTInputValidationSample.MainPage">
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="InvalidStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="Red" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout>
         <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+            <Label Text="Input Validation Sample" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
-        <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
-        <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!" FontSize="16" Padding="30,0,30,0"/>
-        <Label FontSize="16" Padding="30,24,30,0">
-            <Label.FormattedText>
-                <FormattedString>
-                    <FormattedString.Spans>
-                        <Span Text="Learn more at "/>
-                        <Span Text="https://aka.ms/xamarin-quickstart" FontAttributes="Bold"/>
-                    </FormattedString.Spans>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
+        <Entry Margin="20" Placeholder="Absolute URI">
+            <Entry.Behaviors>
+                <xct:UriValidationBehavior UriKind="Absolute" InvalidStyle="{StaticResource InvalidStyle}" />
+            </Entry.Behaviors>
+        </Entry>
+
+        <Entry Margin="20" Placeholder="Required String (Subscribe Now)">
+            <Entry.Behaviors>
+                <xct:RequiredStringValidationBehavior RequiredString="Subscribe Now" InvalidStyle="{StaticResource InvalidStyle}" />
+            </Entry.Behaviors>
+        </Entry>
+
+        <Entry Margin="20" Placeholder="Required String &amp;&amp; Absolute URI">
+            <Entry.Behaviors>
+                <xct:MultiValidationBehavior InvalidStyle="{StaticResource InvalidStyle}">
+                    <xct:UriValidationBehavior UriKind="Absolute" InvalidStyle="{StaticResource InvalidStyle}" />
+
+                <xct:RequiredStringValidationBehavior RequiredString="https://youtube.com/GeraldVersluis" InvalidStyle="{StaticResource InvalidStyle}" />
+                </xct:MultiValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
     </StackLayout>
 
 </ContentPage>
